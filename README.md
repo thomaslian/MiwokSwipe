@@ -2,7 +2,9 @@ Miwok App
 ===================================
 
 This app displays lists of vocabulary words for the user to learn the Miwok language.
-Used in a Udacity course in the Beginning Android Nanodegree.
+Used in a Udacity course in the Beginning Android Nanodegree. 
+Was not possible to do the Fragments without the help from this toturial (thanks):
+https://github.com/codepath/android_guides/wiki/ViewPager-with-FragmentPagerAdapter
 
 Pre-requisites
 --------------
