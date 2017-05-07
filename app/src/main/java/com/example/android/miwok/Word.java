@@ -22,15 +22,19 @@ public class Word {
 
     private static final int NO_IMAGE_PROVIDED = -1;
 
+    //Audio
+    private int mAudioResourceID;
+
     /**
-     * A constructor that creates a new Word obejct.
+     * A constructor that creates a new Word object.
      *
      * @param defaultTranslation In this case, this is the English translation of the word.
      * @param miwokTranslation The miwok translation of the word.
      */
-    public Word(String defaultTranslation, String miwokTranslation){
+    public Word(String defaultTranslation, String miwokTranslation, int audio){
         mDefaultTranslation = defaultTranslation;
         mMiwokTranslation = miwokTranslation;
+        mAudioResourceID = audio;
     }
 
     /**
@@ -41,10 +45,11 @@ public class Word {
      * @param miwokTranslation The miwok translation of the word.
      * @param imageResourceId Resource id for the image that will be used with the word.
      */
-    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId){
+    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId, int audio){
         mDefaultTranslation = defaultTranslation;
         mMiwokTranslation = miwokTranslation;
         mImageResourceId = imageResourceId;
+        mAudioResourceID = audio;
     }
 
     /*
@@ -74,5 +79,14 @@ public class Word {
     public boolean hasImage(){
         return mImageResourceId != NO_IMAGE_PROVIDED;
     }
+
+    /*
+    Get the audio for the word
+     */
+    public int getAudioResourceID(){
+        return mAudioResourceID;
+    }
+
+
 
 }

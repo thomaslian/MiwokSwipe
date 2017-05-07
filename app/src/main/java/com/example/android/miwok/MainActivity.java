@@ -17,78 +17,76 @@ package com.example.android.miwok;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    FragmentPagerAdapter adapterViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set the content of the activity to use the activity_main.xml layout file
-        setContentView(R.layout.activity_main);
+        // Set the content of the activity to use the activity_category.xml layout file
+        setContentView(R.layout.activity_category);
 
-        //Find the view that shows the numbers category
-        TextView numbers = (TextView) findViewById(R.id.numbers);
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        vpPager.setAdapter(adapterViewPager);
 
-        //Set a click listener on that view
-        numbers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Create a new intent to open the {@link NumbersActivity}
-                Intent numbersIntent = new Intent(MainActivity.this, NumbersActivity.class);
-
-                //Start the new activity
-                startActivity(numbersIntent);
-            }
-        });
-
-        //Find the view that shows the family category
-        TextView family = (TextView) findViewById(R.id.family);
-
-        //Set a click listener on that view
-        family.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Create a new intent to open the {@link FamilyActivity}
-                Intent familyIntent = new Intent(MainActivity.this, FamilyActivity.class);
-
-                //Start the new activity
-                startActivity(familyIntent);
-            }
-        });
-
-        //Find the view that shows the colors category
-        TextView colors = (TextView) findViewById(R.id.colors);
-
-        //Set a click listener on that view
-        colors.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Create a new intent to open the {@link ColorsActivity}
-                Intent colorsIntent = new Intent(MainActivity.this, ColorsActivity.class);
-
-                //Start the new activity
-                startActivity(colorsIntent);
-            }
-        });
-
-        //Find the view that shows the phrases category
-        TextView phrases = (TextView) findViewById(R.id.phrases);
-
-        //Set a click listener on that view
-        phrases.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Create a new intent to open the {@link PhrasesActivity}
-                Intent phrasesIntent = new Intent(MainActivity.this, PhrasesActivity.class);
-
-                //Start the new activity
-                startActivity(phrasesIntent);
-            }
-        });
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(vpPager);
     }
+
+    public static class MyPagerAdapter extends FragmentPagerAdapter {
+        private static int NUM_ITEMS = 4;
+
+        private String tabTitles[] = new String[] { "Numbers", "Colors", "Family", "Phrases" };
+
+        public MyPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0: // Fragment # 0 - This will show NumbersFragment
+                    return new NumbersFragment();
+                case 1: // Fragment # 1 - This will show FamilyFragment
+                    return new FamilyFragment();
+                case 2: // Fragment # 2 - This will show ColorsFragment
+                    return new ColorsFragment();
+                case 3: // Fragment # 3 - This will show PhrasesFragment
+                    return new PhrasesFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            // Generate title based on item position
+            return tabTitles[position];
+        }
+    }
+
 }
